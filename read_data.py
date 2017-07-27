@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+from __future__ import print_function
+from __future__ import unicode_literals
 import numpy as np
 import cv2
 import sys
@@ -8,6 +10,12 @@ import os
 import re
 import random
 import math
+import pdb
+
+try:
+    xrange
+except NameError:
+    xrange = range
 
 class PoseReader():
 
@@ -41,9 +49,9 @@ class PoseReader():
             self.color_mode = 0
         with open(annos_path, 'rb') as fr:
             for line in fr:
-                tmp = re.split(',| ', line.strip())
+                tmp = re.split( b',| ', line.strip())
                 if(len(tmp) != self.record_len):
-                    print "Length Error: ", len(tmp)
+                    print("Length Error: ", len(tmp))
                     sys.exit(0)
                 filename = tmp[0]
                 coords = [int(x) for x in tmp[1:self.record_len - 1]]
@@ -53,6 +61,7 @@ class PoseReader():
 
 
     def random_batch(self):
+        #pdb.set_trace()
         rand = random.sample(xrange(self.size), self.batch_size)
         filename_list = list()
         coords_list = list()
@@ -64,7 +73,8 @@ class PoseReader():
 
         img_list = list()
         for filename in filename_list:
-            img = cv2.imread(os.path.join(self.data_path, filename),
+            #pdb.set_trace()
+            img = cv2.imread(os.path.join(self.data_path.encode(), filename).decode(),
                     self.color_mode)
             img = cv2.resize(img, (self.img_width, self.img_height))
             img_list.append(img)

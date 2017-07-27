@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+from __future__ import print_function
 from datetime import datetime
 import os
 import random
@@ -105,7 +106,7 @@ def main():
                         predict_coords_list = sess.run(predicts, feed_dict=feed_dict)
                         # print predict_coords_list
                         for filename, predict_coords in zip(filename_list, predict_coords_list):
-                            print (filename, predict_coords)
+                            print((filename, predict_coords))
                             fw.write(filename + ' ')
                             for i in xrange(config.points_num):
                                 # w = predict_coords[i*2] * config.img_width
@@ -119,6 +120,6 @@ def main():
 
 
 if __name__ == "__main__":
-    print "Begin testing..."
+    print("Begin testing...")
     main()
-    print "Finished testing."
+    print("Finished testing.")

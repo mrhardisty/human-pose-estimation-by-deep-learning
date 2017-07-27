@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+from __future__ import print_function
 from datetime import datetime
 import os
 import random
@@ -11,6 +12,10 @@ import numpy as np
 import cpm
 import read_data
 
+try:
+    xrange
+except NameError:
+    xrange = range
 
 class Config():
 
@@ -18,7 +23,7 @@ class Config():
   TAG = "_demo" # used for uniform filename
                # "_demo": train with demo images
                # "": (empty) train with ~60000 images
-  batch_size = 20
+  batch_size = 5
   initialize = True # True: train from scratch (should also
                     # delete the corresponding params files
                     # in params_dir);
@@ -100,7 +105,7 @@ def main():
             if not os.path.exists(config.params_dir):
                 os.makedirs(config.params_dir)
             if os.listdir(config.params_dir) == [] or config.initialize:
-                print "Initializing Network"
+                print("Initializing Network")
                 sess.run(init_op)
             else:
                 sess.run(init_op)
@@ -131,7 +136,7 @@ def main():
                 with tf.device('/cpu:0'):
                   # write summary
                   if (idx + 1) % config.summary_iters == 0:
-                      print ("iter#", idx + 1)
+                      print(("iter#", idx + 1))
                       tmp_global_step = model.global_step.eval()
                       summary = sess.run(merged, feed_dict=feed_dict)
                       writer.add_summary(summary, tmp_global_step)

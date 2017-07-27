@@ -1,10 +1,16 @@
 #!/usr/bin/env python
 # encoding: utf-8
+from __future__ import print_function
 import tensorflow as tf
 from datetime import datetime
 import os
 import numpy as np
 import read_data
+
+try:
+    xrange
+except NameError:
+    xrange = range
 
 class CPM:
     def __init__(self, config):
@@ -152,10 +158,10 @@ class CPM:
 
     def save(self, sess, saver, filename, global_step):
         path = saver.save(sess, self.params_dir+filename, global_step=global_step)
-        print "Save params at " + path
+        print("Save params at " + path)
 
     def restore(self, sess, saver, filename):
-        print "Restore from previous model: ", self.params_dir+filename
+        print("Restore from previous model: ", self.params_dir+filename)
         saver.restore(sess, self.params_dir+filename)
 
     def fc_layer(self, bottom, out_num, name, is_BN, trainable):
